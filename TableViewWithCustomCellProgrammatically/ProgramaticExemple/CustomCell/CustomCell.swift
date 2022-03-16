@@ -76,8 +76,11 @@ class CustomCell: UITableViewCell {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             stackView.bottomAnchor.constraint(equalTo: profilePicture.bottomAnchor)
         ])
-        
     }
     
-
+    private func setData(_ user: UserModel) {
+        profilePicture.image = UIImage(named: user.profilePicture)
+        userNameLabel.text = user.userName
+        descriptionLabel.text = user.description
+    }
 }
