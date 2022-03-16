@@ -45,10 +45,18 @@ class CustomCell: UITableViewCell {
     //We must override this.
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setData(_ user: UserModel) {
+        profilePicture.image = UIImage(named: user.profilePicture)
+        userNameLabel.text = user.userName
+        descriptionLabel.text = user.description
     }
     
     //MARK: - Private Methods
@@ -76,11 +84,5 @@ class CustomCell: UITableViewCell {
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             stackView.bottomAnchor.constraint(equalTo: profilePicture.bottomAnchor)
         ])
-    }
-    
-    private func setData(_ user: UserModel) {
-        profilePicture.image = UIImage(named: user.profilePicture)
-        userNameLabel.text = user.userName
-        descriptionLabel.text = user.description
     }
 }
