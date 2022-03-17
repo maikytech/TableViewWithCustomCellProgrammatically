@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UserListProgrammaticVC: UIViewController {
+final class UserListProgrammaticVC: UIViewController {
     
     //MARK: - Variables
     private lazy var tableView: UITableView = {
@@ -16,6 +16,7 @@ class UserListProgrammaticVC: UIViewController {
         tableView.dataSource = self
         tableView.rowHeight = 80.0
         tableView.register(CustomCell.self, forCellReuseIdentifier: "\(CustomCell.self)")
+        tableView.register(HeaderSectionCell.self, forHeaderFooterViewReuseIdentifier: "\(HeaderSectionCell.self)")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -27,29 +28,26 @@ class UserListProgrammaticVC: UIViewController {
         
         setupView()
         tableView.reloadData()
-
     }
     
     //MARK: - Private Methods
     private func setupView() {
-        tableViewConstrints()
-        
+        setTableViewConstrints()
     }
     
-    private func tableViewConstrints() {
+    private func setTableViewConstrints() {
         view.addSubview(tableView)
-//        var topPadding: CGFloat = 0.0
-//        if let topInset = UIApplication.shared.windows.first?.safeAreaInsets.top {
-//            topPadding = topInset
-//        }
+        var topPadding: CGFloat = 0.0
+        if let topInset = UIApplication.shared.windows.first?.safeAreaInsets.top {
+            topPadding = topInset
+        }
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: topPadding),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
     }
 }
 
@@ -65,7 +63,20 @@ extension UserListProgrammaticVC: UITableViewDataSource {
         }
         let user = UserModel.getList()[indexPath.row]
         cell.setData(user)
+        cell.accessoryType = .detailButton
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 60
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let headerCell = tableView.dequeueReusableHeaderFooterView(withIdentifier: "\(HeaderSectionCell.self)") as? HeaderSectionCell else {
+            return UITableViewHeaderFooterView()
+        }
+        headerCell.setData(title: "Users List")
+        return headerCell
     }
 }
 

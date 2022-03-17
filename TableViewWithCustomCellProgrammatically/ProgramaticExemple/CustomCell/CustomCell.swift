@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomCell: UITableViewCell {
+final class CustomCell: UITableViewCell {
     
     //MARK: - Variables
     private lazy var profilePicture: UIImageView = {
@@ -61,11 +61,11 @@ class CustomCell: UITableViewCell {
     
     //MARK: - Private Methods
     private func setupView() {
-        profilePictureConstraints()
-        stackViewConstraints()
+        setProfilePictureConstraints()
+        setStackViewConstraints()
     }
     
-    private func profilePictureConstraints() {
+    private func setProfilePictureConstraints() {
         addSubview(profilePicture)
         NSLayoutConstraint.activate([
             profilePicture.topAnchor.constraint(equalTo: topAnchor, constant: 10),
@@ -76,7 +76,7 @@ class CustomCell: UITableViewCell {
         ])
     }
     
-    private func stackViewConstraints() {
+    private func setStackViewConstraints() {
         addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: profilePicture.topAnchor),
